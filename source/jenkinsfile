@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     parameters {
-        choice(name: 'CONTAINER_NAME', choices: ['nombre_contenedor_1', 'nombre_contenedor_2'], description: 'Selecciona el contenedor a desplegar')
+        choice(name: 'CONTAINER_NAME', choices: ['alpine', 'ubuntu',"redis","python","mongo"], description: 'Selecciona el contenedor a desplegar')
         string(name: 'CONTAINER_TAG', defaultValue: 'latest', description: 'Etiqueta del contenedor')
     }
     
