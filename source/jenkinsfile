@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    
+    parameters {
+        choice(name: 'CONTAINER_NAME', choices: ['nombre_contenedor_1', 'nombre_contenedor_2'], description: 'Selecciona el contenedor a desplegar')
+        string(name: 'CONTAINER_TAG', defaultValue: 'latest', description: 'Etiqueta del contenedor')
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/antoniomanuelamayaquiles/proyecto'
+            }
+        }
+        
+        stage('Construir Contenedor') {
+            steps {
+                script {
+                    docker.build "${params.CONTAINER_NAME}:${params.CONTAINER_TAG}"
+                }
+            }
+        }
+        
+        stage('Publicar Contenedor') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry_url', 'credentials_id') {
+                        docker.image "${params.CONTAINER_NAME}:${params.CONTAINER_TAG}".push()
+                    }
+                }
+            }
+        }
+    }
+}
