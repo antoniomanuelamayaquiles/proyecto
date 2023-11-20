@@ -14,10 +14,9 @@ pipeline {
                     def containerName = params.CONTAINER_NAME
                     def image = params.IMAGEN
                     def puerto = params.PUERTO
-                    sh "docker create --name ${containerName} -p ${puerto}:80 ${image}:latest"
+                    sh "docker run -d --name ${containerName} -p ${puerto}:80 ${image}:latest tail -f /dev/null"
                 }
             }
         }
     }
 }
-
