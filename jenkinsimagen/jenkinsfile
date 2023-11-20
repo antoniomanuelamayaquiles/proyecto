@@ -9,8 +9,7 @@ pipeline {
                         'ubuntu',
                         'nginx',
                         'mongo',
-                        'redis',
-                        'python'
+                        'redis'
                     ]
                     images.each { image ->
                         sh "docker pull ${image}:latest"
