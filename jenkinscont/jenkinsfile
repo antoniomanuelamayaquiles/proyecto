@@ -13,10 +13,9 @@ pipeline {
                     def containerName = params.CONTAINER_NAME
                     def image = params.IMAGEN
                     sh "docker create --name ${containerName} ${image}:latest"
-                    sh "echo 'funciona' > ~/funciona.txt"
+                    sh "echo 'funciona' > \$HOME/funciona.txt"
                 }
             }
         }
     }
 }
-
