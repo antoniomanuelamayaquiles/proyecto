@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     def containerName = params.CONTAINER_NAME
-                    sh "docker create --name ${containerName} ubuntu:latest"
+                    sh "docker create --name ${containerName} python:latest"
                 }
             }
         }
