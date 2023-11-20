@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Pull Imágenes Docker') {
+            steps {
+                script {
+                    def images = [
+                        'ubuntu',
+                        'nginx',
+                        'mongo',
+                        'redis',
+                        'python'
+                    ]
+                    images.each { image ->
+                        sh "docker pull ${image}:latest"
+                    }
+                }
+            }
+        }
+    }
+}
