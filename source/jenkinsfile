@@ -2,14 +2,37 @@ pipeline {
     agent any
 
     stages {
-        stage('Ejecutar Docker --version') {
+        stage('Clonar repositorio') {
             steps {
+                // Clonar el repositorio desde GitHub
+                git url: 'https://github.com/antoniomanuelamayaquiles/proyecto'
+            }
+        }
+
+        stage('Construir imagen') {
+            steps {
+                // Construir la imagen Docker a partir del Dockerfile en el directorio del repositorio
                 script {
-                    // Ejecutar el comando 'docker --version'
-                    sh 'docker --version'
+                    dockerImage = docker.build('ubuntu:latest', '-f source/dockerfile .')
+                }
+            }
+        }
+
+        stage('Crear contenedor') {
+            steps {
+                // Ejecutar un contenedor a partir de la imagen creada anteriormente
+                script {
+                    dockerImage.run('-p 8080:80', '--name mi_contenedor')
                 }
             }
         }
     }
-}
 
+    post {
+        always {
+            // Limpiar el contenedor creado al finalizar el pipeline
+            cleanWs()
+            sh 'docker rm -f mi_contenedor || true'
+        }
+    }
+}
