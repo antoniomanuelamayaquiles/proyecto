@@ -4,6 +4,7 @@ pipeline {
     parameters {
         string(name: 'CONTAINER_NAME', defaultValue: 'mi_contenedor', description: 'Nombre del contenedor')
         choice(choices: ['ubuntu', 'nginx', 'mongo', 'redis'], description: 'Selecciona la imagen a utilizar', name: 'IMAGEN')
+        string(name: 'PUERTO', defaultValue: '8080', description: 'Puerto del contenedor')
     }
 
     stages {
@@ -12,10 +13,11 @@ pipeline {
                 script {
                     def containerName = params.CONTAINER_NAME
                     def image = params.IMAGEN
-                    sh "docker create --name ${containerName} ${image}:latest"
-                    sh "echo 'funciona' > \$HOME/funciona.txt"
+                    def puerto = params.PUERTO
+                    sh "docker create --name ${containerName} -p ${puerto}:80 ${image}:latest"
                 }
             }
         }
     }
 }
+
