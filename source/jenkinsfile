@@ -2,13 +2,27 @@ pipeline {
     agent any
 
     stages {
-        stage('Ejecutar Docker --version') {
+        stage('Ejecutar Docker ps') {
             steps {
                 script {
-                    // Ejecutar el comando 'docker --version'
-                    sh 'docker create --name mi_contenedor ubuntu:latest'
+                    def containerName = 'mi_contenedor'
+                    int counter = 1
+                    while (true) {
+                        def existingContainer = sh(returnStdout: true, script: "docker ps -a --format '{{.Names}}' | grep ${containerName}${counter}", returnStatus: true)
+                        if (existingContainer != 0) {
+                            // El contenedor ya existe, se intentará con el siguiente número
+                            counter++
+                        } else {
+                            // El nombre está disponible, se usa
+                            containerName = "${containerName}${counter}"
+                            break
+                        }
+                    }
+                    // Ejecutar el comando 'docker ps' con el nombre del contenedor
+                    sh "docker ps -a --format '{{.Names}}' | grep ${containerName}"
                 }
             }
         }
     }
 }
+
