@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'CONTAINER_NAME', defaultValue: 'mi_contenedor', description: 'Nombre del contenedor')
+        choice(choices: ['ubuntu', 'nginx', 'mongo', 'redis', 'python'], description: 'Selecciona la imagen a utilizar', name: 'IMAGEN')
     }
 
     stages {
-        stage('Crear contenedor') {
+        stage('Crear Contenedor') {
             steps {
                 script {
-                    def containerName = params.CONTAINER_NAME
-                    sh "docker create --name ${containerName} python:latest"
+                    def image = params.IMAGEN
+                    sh "docker run -d --name mi_contenedor -p 8080:80 ${image}:latest"
                 }
             }
         }
