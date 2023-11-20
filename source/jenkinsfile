@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Ejecutar el comando 'docker --version'
-                    sh 'docker ps'
+                    sh 'docker create --name mi_contenedor ubuntu:latest'
                 }
             }
         }
