@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('prueba') {
+            steps {
+                script {
+                    sh "docker --version"
+                }
+            }
+        }
+    }
+}
