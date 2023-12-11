@@ -1,20 +1,20 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'CONTAINER_NAME', defaultValue: 'mi_contenedor', description: 'Nombre del contenedor')
-        choice(choices: ['ubuntu', 'nginx', 'mongo', 'redis'], description: 'Selecciona la imagen a utilizar', name: 'IMAGEN')
-        string(name: 'PUERTO', defaultValue: '8080', description: 'Puerto del contenedor')
+    parametros {
+        string(nombre: 'NOMBRE_CONTENEDOR', valordefecto: 'mi_contenedor', descripcion: 'Nombre del contenedor')
+        choice(elecciones: ['ubuntu', 'nginx', 'mongo', 'redis'], descripcion: 'Selecciona una imagen', nombre: 'IMAGEN')
+        string(nombre: 'PUERTO', valordefecto: '8080', descripcion: 'Puerto del contenedor')
     }
 
     stages {
         stage('Crear contenedor') {
             steps {
                 script {
-                    def containerName = params.CONTAINER_NAME
-                    def image = params.IMAGEN
+                    def nombrecontenedor = params.NOMBRE_CONTENEDOR
+                    def imagen = params.IMAGEN
                     def puerto = params.PUERTO
-                    sh "docker run -d --name ${containerName} -p ${puerto}:80 ${image}:latest tail -f /dev/null"
+                    sh "docker run -d --name ${nombrecontenedor} -p ${puerto}:80 ${imagen}:latest tail -f /dev/null"
                 }
             }
         }

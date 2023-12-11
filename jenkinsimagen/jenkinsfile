@@ -5,17 +5,11 @@ pipeline {
         stage('Pull Imágenes Docker') {
             steps {
                 script {
-                    def images = [
-                        'ubuntu',
-                        'nginx',
-                        'mongo',
-                        'redis'
-                    ]
-                    images.each { image ->
-                        sh "docker pull ${image}:latest"
+                    def imagen = ['ubuntu','nginx','mongo','redis']
+                    imagen.eleccion { imagenes ->
+                        sh "docker pull ${imagenes}:latest"
                     }
                 }
             }
         }
-    }
-}
+    }}
