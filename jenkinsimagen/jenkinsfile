@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     def imagen = ['ubuntu','nginx','mongo','redis']
-                    imagen.eleccion { imagenes ->
+                    imagen.each { imagenes ->
                         sh "docker pull ${imagenes}:latest"
                     }
                 }
