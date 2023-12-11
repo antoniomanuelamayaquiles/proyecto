@@ -1,16 +1,15 @@
-tubería {
-    agente any
+pipeline {
+    agent any
 
-    etapas {
-        etapa('Descargar Imágenes Docker') {
-            pasos {
-                guión {
-                    def imagenes = ['ubuntu','nginx','mongo','redis']
-                    imagenes.each { imagen ->
-                        sh "docker pull ${imagen}:latest"
+    stages {
+        stage('Pull Imágenes Docker') {
+            steps {
+                script {
+                    def imagen = ['ubuntu','nginx','mongo','redis']
+                    imagen.eleccion { imagenes ->
+                        sh "docker pull ${imagenes}:latest"
                     }
                 }
             }
         }
-    }
-}
+    }}
