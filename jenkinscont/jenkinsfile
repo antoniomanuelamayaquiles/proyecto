@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    parametros {
+    parameters {
         string(nombre: 'NOMBRE_CONTENEDOR', valordefecto: 'mi_contenedor', descripcion: 'Nombre del contenedor')
         choice(elecciones: ['ubuntu', 'nginx', 'mongo', 'redis'], descripcion: 'Selecciona una imagen', nombre: 'IMAGEN')
         string(nombre: 'PUERTO', valordefecto: '8080', descripcion: 'Puerto del contenedor')
